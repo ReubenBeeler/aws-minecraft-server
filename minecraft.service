@@ -1,0 +1,26 @@
+[Unit]
+Description=Minecraft Server
+After=network.target
+
+[Service]
+Type=simple
+User=minecraft
+Group=minecraft
+WorkingDirectory=~/minecraft
+
+ExecStartPre=/usr/local/bin/minecraft-StartPre.sh
+ExecStart=/bin/bash -c 'cd $MC_PATH && tail -f $MC_FIFO | /usr/bin/java -Xms4G -Xmx6G -jar server.jar nogui'
+ExecStop=/bin/bash -c 'echo -e say Closing Minecraft server...\\nstop > $MC_FIFO;'
+TimeoutStopSec=90
+ExecStopPost=/usr/local/bin/minecraft-StopPost.sh
+
+# Restart behavior
+Restart=on-failure
+RestartSec=10
+
+# Output to journal
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
