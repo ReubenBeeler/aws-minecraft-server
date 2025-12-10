@@ -31,5 +31,4 @@ id -nG $USER | grep -w minecraft || sudo usermod -aG minecraft ec2-user
 
 # Reload systemctl so it is aware of the new service
 sudo systemctl daemon-reload
-
-# minecraft.service will automatically be started on boot and stopped on shutdown
+sudo systemctl enable minecraft # minecraft.service will automatically be started on boot and stopped on shutdown
