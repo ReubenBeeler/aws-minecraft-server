@@ -17,15 +17,14 @@ sudo dnf install java-21-amazon-corretto-headless -y
 
 prev_dir=$PWD
 cd /
-mv $prev_dir $PACKAGE_DIR
-ln -s $PACKAGE_DIR $prev_dir
+sudo mv $prev_dir $PACKAGE_DIR
+sudo ln -s $PACKAGE_DIR $prev_dir
 unset prev_dir
 
-cd $PACKAGE_DIR
-find . -type d -exec chmod 774 {} \;
-find . -type f -exec chmod 660 {} \;
-find bin -exec chmod 760 {} \;
-sudo ln -f minecraft.service /etc/systemd/system/minecraft.service
+find $PACKAGE_DIR -type d -exec chmod 774 {} \;
+find $PACKAGE_DIR -type f -exec chmod 660 {} \;
+find $PACKAGE_DIR/bin -exec chmod 760 {} \;
+sudo ln -f $PACKAGE_DIR/minecraft.service /etc/systemd/system/minecraft.service
 # Make group and add user to group for minecraft.service
 getent group minecraft > /dev/null || sudo groupadd minecraft # add group minecraft if not exists
 id -nG $USER | grep -w minecraft || sudo usermod -aG minecraft ec2-user
