@@ -5,7 +5,7 @@
 # export MC_PATH="$(dirname $0)/minecraft"
 
 # cd $(dirname $0)
-cd /home/ec2-user/
+cd /home/ec2-user/aws-minecraft-server
 
 sudo dnf install java-21-amazon-corretto-headless -y
 
