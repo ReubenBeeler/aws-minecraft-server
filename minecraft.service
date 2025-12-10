@@ -4,15 +4,15 @@ After=network.target
 
 [Service]
 Type=simple
-User=minecraft
+User=ec2-user
 Group=minecraft
-WorkingDirectory=/home/ec2-user/aws-minecraft-server/minecraft
+WorkingDirectory=/opt/aws-minecraft-server/minecraft
 
-ExecStartPre=/usr/local/bin/minecraft-StartPre.sh
-ExecStart=/bin/bash -c 'cd /home/ec2-user/aws-minecraft-server/minecraft && tail -f /tmp/minecraft-input | /usr/bin/java -Xms4G -Xmx6G -jar server.jar nogui'
-ExecStop=/bin/bash -c 'echo -e say Closing Minecraft server...\\nstop > /tmp/minecraft-input;'
+ExecStartPre=/opt/aws-minecraft-server/bin/StartPre.sh
+ExecStart=/opt/aws-minecraft-server/bin/Start.sh
+ExecStop=/opt/aws-minecraft-server/bin/Stop.sh
+ExecStopPost=/opt/aws-minecraft-server/bin/StopPost.sh
 TimeoutStopSec=90
-ExecStopPost=/usr/local/bin/minecraft-StopPost.sh
 
 # Restart behavior
 Restart=on-failure
