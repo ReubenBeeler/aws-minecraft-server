@@ -2,16 +2,18 @@
 
 PACKAGE_DIR="/opt/aws-minecraft-server"
 
+# Don't proceed if package already exists since that would obliterate any files that haven't been backed up!
+if [[ -d $PACKAGE_DIR ]]; then
+	echo "Package already exists at $PACKAGE_DIR. In order to reinstall, backup all files and then remove $PACKAGE_DIR." >&2
+    exit 1
+fi
+
 echo -e "Relocating files to $PACKAGE_DIR for installation (go to $PACKAGE_DIR for future edits)"
 
 cd $(dirname $0)
 
 # Install dependencies
 sudo dnf install java-21-amazon-corretto-headless -y
-
-if [[ -d $PACKAGE_DIR ]]; then
-	rm -rf $PACKAGE_DIR
-fi
 
 prev_dir=$PWD
 cd /
