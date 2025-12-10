@@ -6,11 +6,11 @@ After=network.target
 Type=simple
 User=minecraft
 Group=minecraft
-WorkingDirectory=~/minecraft
+WorkingDirectory=/home/ec2-user/aws-minecraft-server/minecraft
 
 ExecStartPre=/usr/local/bin/minecraft-StartPre.sh
-ExecStart=/bin/bash -c 'cd $MC_PATH && tail -f $MC_FIFO | /usr/bin/java -Xms4G -Xmx6G -jar server.jar nogui'
-ExecStop=/bin/bash -c 'echo -e say Closing Minecraft server...\\nstop > $MC_FIFO;'
+ExecStart=/bin/bash -c 'cd /home/ec2-user/aws-minecraft-server/minecraft && tail -f /tmp/minecraft-input | /usr/bin/java -Xms4G -Xmx6G -jar server.jar nogui'
+ExecStop=/bin/bash -c 'echo -e say Closing Minecraft server...\\nstop > /tmp/minecraft-input;'
 TimeoutStopSec=90
 ExecStopPost=/usr/local/bin/minecraft-StopPost.sh
 
