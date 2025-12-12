@@ -6,11 +6,14 @@ This repo is for installing a systemd service to run a 1.21.10 Minecraft server 
 THIS ASSUMES AN INSTANCE STORE PARTITION AT `/dev/nvme1n1`! Using an ec2 instance with instance storage (like instance family r6gd) allows better performance on IO limited tasks such as exploring new minecraft chunks. This service automatically saves and backs up the minecraft server and world files to the root filesystem, which is assumed to be a persistent EBS volume.
 
 ## Install
+Run the `user_data.sh` script in your EC2's user data script. 
 For a quick install, see the TL;DR subsection. For more details, see the More Details section.
 ### TL;DR
-Run this script on your EC2.
+Upload `user_data.sh` as your EC2's user data. If the EC2 instance is already running, execute the user script manually using `bash user_data.sh`.
+
+Run this install script on your EC2.
 ```bash
-which git >/dev/null || echo sudo yum install git -y \
+which git >/dev/null || sudo yum install git -y \
 && git clone https://github.com/ReubenBeeler/aws-minecraft-server.git \
 && bash aws-minecraft-server/install.sh
 ```
@@ -19,7 +22,9 @@ Configure your Minecraft server, then start it with
 sudo systemctl start minecraft
 ```
 ### More Details
-Make sure `git` is installed. If you're unsure if `git` is already installed, run
+Add `user_data.sh` as part of your EC2's user data. If the EC2 instance is already running, execute the user script manually using `bash user_data.sh`. If not already running, launch the EC2 instance (which will execute `user_data.sh` on boot).
+
+Make sure `git` is installed on your EC2. If you're unsure if `git` is already installed, run
 ```bash
 which git >/dev/null && echo git is installed at $(which git) || echo Need to install git
 ```
