@@ -21,14 +21,13 @@ sudo mv $prev_dir $PACKAGE_DIR
 sudo ln -s $PACKAGE_DIR $prev_dir
 unset prev_dir
 
+getent group minecraft > /dev/null || sudo groupadd minecraft # add group minecraft if not exists
+id -nG $USER | grep -w minecraft || sudo usermod -aG minecraft ec2-user
 find $PACKAGE_DIR -exec chown ec2-user:minecraft {} \;
 find $PACKAGE_DIR -exec chmod 660 {} \;
 find $PACKAGE_DIR -type d -exec chmod 776 {} \;
 find $PACKAGE_DIR/bin -exec chmod 760 {} \;
 sudo ln -f $PACKAGE_DIR/minecraft.service /etc/systemd/system/minecraft.service
-# Make group and add user to group for minecraft.service
-getent group minecraft > /dev/null || sudo groupadd minecraft # add group minecraft if not exists
-id -nG $USER | grep -w minecraft || sudo usermod -aG minecraft ec2-user
 
 # Reload systemctl so it is aware of the new service
 sudo systemctl daemon-reload
