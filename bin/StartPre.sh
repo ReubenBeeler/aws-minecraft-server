@@ -13,13 +13,13 @@ if ! mount | grep -q "$NVME_PARTITION on $MOUNT_POINT"; then
 fi
 
 if [[ ! -p $FIFO_PATH ]]; then
-    sudo rm -f $FIFO_PATH
-    sudo mkfifo -m 660 $FIFO_PATH
+    rm -f $FIFO_PATH
+    mkfifo -m 660 $FIFO_PATH
 fi
 
 if [[ $PACKAGE_DIR/minecraft != $MOUNT_POINT/minecraft ]]; then
     # Assume minecraft dir is on faster but ephemeral storage (e.g. instance store)
     # Backup the previous minecraft dir and copy over this one
-    sudo rm -rf $MOUNT_POINT/minecraft
-    sudo cp -r $PACKAGE_DIR/minecraft $MOUNT_POINT/minecraft
+    rm -rf $MOUNT_POINT/minecraft
+    cp -r $PACKAGE_DIR/minecraft $MOUNT_POINT/minecraft
 fi

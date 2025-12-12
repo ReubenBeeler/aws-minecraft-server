@@ -13,7 +13,7 @@ sudo rm -f $FIFO_PATH
 if [[ $PACKAGE_DIR/minecraft != $MOUNT_POINT/minecraft ]]; then
     # Assume minecraft dir is on faster but ephemeral storage (e.g. instance store)
     # Backup the previous minecraft dir and copy over this one
-    sudo zip backup.zip -r $PACKAGE_DIR/minecraft/
-    sudo rm -rf $PACKAGE_DIR/minecraft/
-    sudo cp -r $MOUNT_POINT/minecraft $PACKAGE_DIR/minecraft
+    zip backup.zip -r $PACKAGE_DIR/minecraft/
+    rm -rf $PACKAGE_DIR/minecraft/
+    cp -r $MOUNT_POINT/minecraft $PACKAGE_DIR/minecraft
 fi
